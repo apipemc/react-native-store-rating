@@ -100,8 +100,10 @@ class RateModal extends react_1.Component {
         }
     }
     sendRate() {
-        const { storeRedirectThreshold, playStoreUrl, iTunesStoreUrl } = this.props;
+        const { storeRedirectThreshold, playStoreUrl, iTunesStoreUrl, onSendReview } = this.props;
         if (this.state.rating > storeRedirectThreshold) {
+            this.setState({ isModalOpen: false });
+            onSendReview();
             react_native_1.Platform.OS === 'ios' ?
                 react_native_1.Linking.openURL(iTunesStoreUrl) :
                 react_native_1.Linking.openURL(playStoreUrl);
@@ -137,6 +139,7 @@ RateModal.defaultProps = {
     storeRedirectThreshold: 3,
     starLabels: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
     isTransparent: true,
+    onSendReview: () => { }
 };
 exports.RateModal = RateModal;
 //# sourceMappingURL=RateModal.js.map

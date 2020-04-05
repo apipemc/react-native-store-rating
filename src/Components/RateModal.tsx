@@ -25,6 +25,7 @@ export class RateModal extends Component<IProps, IState> {
 		storeRedirectThreshold: 3,
 		starLabels: ['Terrible', 'Bad', 'Okay', 'Good', 'Great'],
 		isTransparent: true,
+		onSendReview: () => {}
 	};
 
 	constructor(props: IProps) {
@@ -167,8 +168,10 @@ export class RateModal extends Component<IProps, IState> {
 	}
 
 	private sendRate(): void {
-		const { storeRedirectThreshold, playStoreUrl, iTunesStoreUrl } = this.props;
+		const { storeRedirectThreshold, playStoreUrl, iTunesStoreUrl, onSendReview } = this.props;
 		if (this.state.rating > storeRedirectThreshold) {
+			this.setState({ isModalOpen: false });
+			onSendReview();
 			Platform.OS === 'ios' ?
 				Linking.openURL(iTunesStoreUrl) :
 				Linking.openURL(playStoreUrl);
